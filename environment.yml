@@ -6,7 +6,8 @@ channels:
   - defaults
 
 dependencies:
-  - python=3.7.12
+  - jupyterlab
+  - python=3.9
   - pip=24.0
   - cudatoolkit=11.3.1
   - biopython=1.79
@@ -46,3 +47,8 @@ dependencies:
       - scikit-learn==1.0.2
       - scipy==1.7.1
       - sentencepiece==0.2.0
+      - easydict
+      - lmdb
+      - gdown
+      - wandb
+      - transformers

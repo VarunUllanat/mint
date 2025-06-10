@@ -299,7 +299,7 @@ class SimpleMLP(nn.Module):
 def evaluate(model, loader, name, task_type, device):
     preds = []
     targets = []
-    for step, eval_batch in enumerate(tqdm(loader)):
+    for step, eval_batch in enumerate(loader):
         embs, target = eval_batch
         embs = embs.to(device)
         target = target.to(device)
@@ -331,7 +331,7 @@ def train_mlp(
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=metadata["lr"])
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode="min", factor=0.5, patience=10, verbose=True
+        optimizer, mode="min", factor=0.5, patience=10
     )
 
     if metadata["task_type"] == "reg":
@@ -341,9 +341,9 @@ def train_mlp(
 
     best_val_metric = 0
 
-    for epoch in range(metadata["num_epochs"]):
+    for epoch in tqdm(range(metadata["num_epochs"])):
         loss_accum = 0
-        for step, train_batch in enumerate(tqdm(train_loader)):
+        for step, train_batch in enumerate(train_loader):
 
             model.train()
             optimizer.zero_grad()
@@ -384,6 +384,8 @@ def clean_targets(t):
 
 
 def main(args):
+    wandb.login(key="03c57b40de2b2f02c0d3c1357868f3ef656696ce")
+    wandb.init()
 
     train_dataset, val_dataset, test_dataset, metadata = get_task_datasets(
         args.task, return_metadata=True
