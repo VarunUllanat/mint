@@ -8,7 +8,7 @@ logger = get_logger(__name__)
 
 logger.info("===Reading seqs====")
 seqs = {}
-for seq in SeqIO.parse(open("../protein.sequences.v12.0.fa.50"), "fasta"):
+for seq in SeqIO.parse(open("../protein.sequences.v12.0.fa"), "fasta"):
     seqs[seq.name] = str(seq.seq)
     if len(seqs) % 1000000 == 0:
         logger.info(f"{len(seqs) / 1e6} million seqs read")
