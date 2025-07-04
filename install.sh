@@ -47,7 +47,7 @@ else
     echo "Downloading HumanPPI dataset..."
     # Downloading HumanPPI from here: https://github.com/westlake-repl/SaProt?tab=readme-ov-file#downstream-tasks
     gdown https://drive.google.com/uc?id=1ahgj-IQTtv3Ib5iaiXO_ASh2hskEsvoX
-    sudo apt install -y unp
+    sudo apt install -y -qqq unp
     unp HumanPPI.tar.gz
 fi
 
