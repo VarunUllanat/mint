@@ -226,7 +226,7 @@ def pre_defined_cv(embeddings, targets, input_df, task_type, use_mlp, reps):
             metrics_rep.append(metrics_dict)
 
         all_metrics_rep = calculate_mean_std(metrics_rep)
-        wandb.log(all_metrics_rep)
+        # wandb.log(all_metrics_rep)
 
     return all_metrics_rep
 
@@ -275,7 +275,7 @@ def cross_validation(embeddings, targets, task_type, use_mlp, normalize):
 
     all_metrics = calculate_mean_std(metrics)
 
-    wandb.log(all_metrics)
+    # wandb.log(all_metrics)
 
     return all_metrics
 
@@ -384,8 +384,8 @@ def clean_targets(t):
 
 
 def main(args):
-    wandb.login(key="03c57b40de2b2f02c0d3c1357868f3ef656696ce")
-    wandb.init()
+    # wandb.login(key="03c57b40de2b2f02c0d3c1357868f3ef656696ce")
+    # wandb.init()
 
     train_dataset, val_dataset, test_dataset, metadata = get_task_datasets(
         args.task, return_metadata=True
@@ -486,9 +486,10 @@ def main(args):
                     rep,
                 )
                 all_metrics.append(metrics)
-            wandb.log(calculate_mean_std(all_metrics))
+            # wandb.log(calculate_mean_std(all_metrics))
+            print(calculate_mean_std(all_metrics))
 
-        wandb.finish()
+        # wandb.finish()
 
 
 if __name__ == "__main__":
