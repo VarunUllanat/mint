@@ -10,8 +10,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .axial_attention import ColumnSelfAttention, RowSelfAttention
 from .multihead_attention import MultiheadAttention  # noqa
+from .axial_attention import ColumnSelfAttention, RowSelfAttention
 
 
 def gelu(x):
@@ -76,7 +76,6 @@ try:
             else:
                 with torch.cuda.device(x.device):
                     return super().forward(x)
-
 
 except ImportError:
     from torch.nn import LayerNorm as ESM1bLayerNorm
@@ -186,6 +185,7 @@ class TransformerLayer(nn.Module):
         x = gelu(self.fc1(x))
         x = self.fc2(x)
         x = residual + x
+
         return x, attn
 
 
@@ -200,7 +200,7 @@ class AxialTransformerLayer(nn.Module):
         dropout: float = 0.1,
         attention_dropout: float = 0.1,
         activation_dropout: float = 0.1,
-        max_tokens_per_msa: int = 2 ** 14,
+        max_tokens_per_msa: int = 2**14,
     ) -> None:
         super().__init__()
 
@@ -234,7 +234,11 @@ class AxialTransformerLayer(nn.Module):
         self.feed_forward_layer = self.build_residual(feed_forward_layer)
 
     def build_residual(self, layer: nn.Module):
-        return NormalizedResidualBlock(layer, self.embedding_dim, self.dropout_prob,)
+        return NormalizedResidualBlock(
+            layer,
+            self.embedding_dim,
+            self.dropout_prob,
+        )
 
     def forward(
         self,
@@ -248,10 +252,14 @@ class AxialTransformerLayer(nn.Module):
         modules similar to the original Transformer implementation.
         """
         x, row_attn = self.row_self_attention(
-            x, self_attn_mask=self_attn_mask, self_attn_padding_mask=self_attn_padding_mask,
+            x,
+            self_attn_mask=self_attn_mask,
+            self_attn_padding_mask=self_attn_padding_mask,
         )
         x, column_attn = self.column_self_attention(
-            x, self_attn_mask=self_attn_mask, self_attn_padding_mask=self_attn_padding_mask,
+            x,
+            self_attn_mask=self_attn_mask,
+            self_attn_padding_mask=self_attn_padding_mask,
         )
         x = self.feed_forward_layer(x)
         if need_head_weights:
@@ -398,13 +406,18 @@ class ContactPredictionHead(nn.Module):
 
 class NormalizedResidualBlock(nn.Module):
     def __init__(
-        self, layer: nn.Module, embedding_dim: int, dropout: float = 0.1,
+        self,
+        layer: nn.Module,
+        embedding_dim: int,
+        dropout: float = 0.1,
     ):
         super().__init__()
         self.embedding_dim = embedding_dim
 
         self.layer = layer
-        self.dropout_module = nn.Dropout(dropout,)
+        self.dropout_module = nn.Dropout(
+            dropout,
+        )
         self.layer_norm = ESM1bLayerNorm(self.embedding_dim)
 
     def forward(self, x, *args, **kwargs):
@@ -432,14 +445,16 @@ class FeedForwardNetwork(nn.Module):
         embedding_dim: int,
         ffn_embedding_dim: int,
         activation_dropout: float = 0.1,
-        max_tokens_per_msa: int = 2 ** 14,
+        max_tokens_per_msa: int = 2**14,
     ):
         super().__init__()
         self.embedding_dim = embedding_dim
         self.ffn_embedding_dim = ffn_embedding_dim
         self.max_tokens_per_msa = max_tokens_per_msa
         self.activation_fn = nn.GELU()
-        self.activation_dropout_module = nn.Dropout(activation_dropout,)
+        self.activation_dropout_module = nn.Dropout(
+            activation_dropout,
+        )
         self.fc1 = nn.Linear(embedding_dim, ffn_embedding_dim)
         self.fc2 = nn.Linear(ffn_embedding_dim, embedding_dim)
 
