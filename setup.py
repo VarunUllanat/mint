@@ -1,8 +1,5 @@
 from setuptools import find_packages, setup
 
-with open("mint/version.py") as infile:
-    exec(infile.read())
-
 with open("README.md") as f:
     readme = f.read()
 
@@ -20,11 +17,12 @@ extras = {
 
 setup(
     name="mint",
-    version=version,
+    version="0.1.0",
     description="Learning the language of protein-protein interactions",
     long_description=readme,
     long_description_content_type="text/markdown",
-    packages=find_packages(include=["mint", "mint.*"]),
+    package_dir={"": "src"},
+    packages=find_packages(where="src"),
     author="Varun Ullanat",
     url="https://github.com/VarunUllanat/mint",
     license="MIT",
