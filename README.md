@@ -138,6 +138,26 @@ for name, param in wrapper.model.named_parameters():
     print(f"Parameter: {name}, Trainable: {param.requires_grad}")
 ```
 
+### Pre-training on STRING-DB 
+
+This section outlines the steps required to pretrain MINT on PPIs from STRING-DB. First, to create the train-validation splits we used, first download `protein.physical.links.v12.0.txt.gz` and `protein.sequences.v12.0.fa.gz` from [STRING-DB](https://stringdb-downloads.org/download/). 
+
+Then, run the following commands to cluster the sequences using a 50% sequence similarity threshold using [mmseqs](https://github.com/soedinglab/MMseqs2).
+
+```
+mmseqs createdb protein.sequences.v12.0.fa DB100
+mmseqs cluster DB100 clu50 /tmp/mmseqs --min-seq-id 0.50 --remove-tmp-files
+mmseqs createtsv DB100 DB100 clu50 clu50.tsv
+```
+
+Then, run `stringdb.py`, ensuring that the filepaths in that script match the paths where you stored the 'protein.sequences.v12.0.fa', `clu50.tsv` (output of the previous step), and `protein.physical.links.full.v12.0.txt.gz` files. 
+
+Finally, run the training like this:
+
+```
+python train.py --batch_size 2 --crop_len 512 --model 650M --val_check_interval 320000 --accumulate_grad 32 --run_name 650M_nofreeze_filtered --copy_weights --wandb --dataset_split filtered
+```
+
 ### Examples 
 
 We provide several examples highlighting the use cases of MINT on various supervised tasks and different protein types in the `downstream` folder. 
