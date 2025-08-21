@@ -150,7 +150,7 @@ mmseqs cluster DB100 clu50 /tmp/mmseqs --min-seq-id 0.50 --remove-tmp-files
 mmseqs createtsv DB100 DB100 clu50 clu50.tsv
 ```
 
-Then, run `stringdb.py`, ensuring that the filepaths in that script match the paths where you stored the 'protein.sequences.v12.0.fa', `clu50.tsv` (output of the previous step), and `protein.physical.links.full.v12.0.txt.gz` files. 
+Then, run `stringdb.py`, ensuring that the filepaths in that script match the paths where you stored the `protein.sequences.v12.0.fa`, `clu50.tsv` (output of the previous step), and `protein.physical.links.full.v12.0.txt.gz` files. 
 
 Finally, run the training like this:
 
