@@ -249,7 +249,7 @@ def evaluate(model, loader, args):
         pearsons.append(pearson)
         spearmans.append(spearman)
 
-    return np.mean(mse), np.mean(pearson), np.mean(spearman)
+    return np.mean(mses), np.mean(pearsons), np.mean(spearmans)
 
 
 @torch.no_grad()
