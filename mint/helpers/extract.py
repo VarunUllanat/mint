@@ -92,7 +92,7 @@ class MINTWrapper(nn.Module):
             token_dropout=cfg.token_dropout,
             use_multimer=use_multimer,
         )
-        checkpoint = torch.load(checkpoint_path, map_location=device)
+        checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
         if use_multimer:
             # remove 'model.' in keys
             new_checkpoint = OrderedDict(
