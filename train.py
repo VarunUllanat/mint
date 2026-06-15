@@ -108,7 +108,7 @@ if (not args.no_multimer) and args.copy_weights:
 
 if args.validate:
     if args.ckpt:
-        ckpt = torch.load(args.ckpt)
+        ckpt = torch.load(args.ckpt, weights_only=False)
         model.load_state_dict(ckpt["state_dict"], strict=False)
     trainer.validate(model, val_loader)
 else:
