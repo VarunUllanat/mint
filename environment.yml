@@ -1,48 +1,45 @@
+# pinned the latest versions that resolved
+# in a working env (mint_latest, October 2026). Use this to reproduce that env;
 name: mint
 channels:
-  - pytorch
-  - bioconda
   - conda-forge
-  - defaults
+  - bioconda
 
 dependencies:
-  - python=3.7.12
-  - pip=24.0
-  - cudatoolkit=11.3.1
-  - biopython=1.79
-  - einops=0.7.0
-  - fairscale=0.4.3
+  - python=3.10
+  - pip
+  - biopython=1.88
+  - einops=0.8.2
+  - fairscale=0.4.13
   - hhsuite=3.3.0
-  - hmmer=3.3.2
-  - hydra-core=1.3.2
-  - ipykernel=6.15.2
-  - ipython=7.31.1
-  - jupyter_client=7.4.9
-  - jupyter_core=4.11.2
+  - hmmer=3.4
+  - hydra-core=1.3.7
+  - ipykernel=7.3.0
+  - ipython=8.37.0
+  - jupyter_client=8.10.0
+  - jupyter_core=5.9.1
   - kalign2=2.04
-  - omegaconf=2.3.0
-  - openmm=7.5.1
-  - pandas=1.3.5
-  - pdbfixer=1.7
-  - pytest=7.4.4
-  - pytorch=1.12.1
-  - pytorch-mutex=1.0
+  - omegaconf=2.3.1
+  - openmm=8.6.0
+  - pandas=2.3.3
+  - pdbfixer=1.12
+  - pytest=9.1.1
   - pip:
-      - absl-py==2.1.0
-      - datasets==2.13.2
-      - deepspeed==0.5.9
-      - filelock==3.12.2
-      - gdown==4.7.3
-      - huggingface-hub==0.16.4
-      - jupyterlab-widgets==3.0.10
-      - lightning==1.9.5
-      - matplotlib==3.5.3
-      - numpy==1.21.2
-      - openpyxl==3.1.3
-      - protobuf==3.20.3
-      - rdkit-pypi==2022.9.5
-      - regex==2024.4.16
-      - requests==2.26.0
-      - scikit-learn==1.0.2
-      - scipy==1.7.1
-      - sentencepiece==0.2.0
+      - torch==2.14.1
+      - absl-py==2.5.1
+      - datasets==5.1.0
+      - filelock==4.1.0
+      - gdown==6.4.2
+      - huggingface-hub==2.2.0
+      - jupyterlab-widgets==3.0.17
+      - lightning==2.6.6
+      - matplotlib==3.10.9
+      - numpy==2.2.6
+      - openpyxl==3.1.5
+      - protobuf==7.36.2
+      - rdkit==2026.9.1
+      - regex==2026.9.29
+      - requests==2.34.2
+      - scikit-learn==1.7.2
+      - scipy==1.15.3
+      - sentencepiece==0.2.2
